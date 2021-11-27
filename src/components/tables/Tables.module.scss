@@ -1,0 +1,26 @@
+.mainContainer {
+  background-image: url(../../styles/backGroundImg/q-u-i-cnTdKzMOBns-unsplash.jpg);
+  background-color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.blackBox {
+  background-color: rgba(103, 150, 220, 0.719);
+  width: 45vw;
+  height: 75vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tableContainer {
+  width: 40vw;
+}
+
+@media (max-width: 720px) {
+}

@@ -1,24 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from "react";
+import Login from "./components/login/Login";
+import Tables from "./components/tables/Tables";
+import Auth from "./context/auth";
 
 function App() {
+  const [token, setToken] = useState(null);
+  
+  useEffect(() => {
+    setToken(JSON.parse(localStorage.getItem("Token")));
+  }, [setToken, token]);
+  
+  console.log("🚀 ~ file: App.js ~ line 9 ~ App ~ token", token);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Auth.Provider value={{ setToken, token }}>
+        {!token ? <Login /> : <Tables />}
+      </Auth.Provider>
+    </>
   );
 }
 

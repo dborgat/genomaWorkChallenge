@@ -1,0 +1,42 @@
+.loginContainer {
+  width: 100vw;
+  height: 100vh;
+  background-image: url(../../styles/backGroundImg/mitchell-luo-ChXHveqrb28-unsplash.jpg);
+  background-color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.blackBox {
+  background-color: rgba(103, 150, 220, 0.719);
+  width: 25vw;
+  height: 35vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.inputContainer {
+  width: 20vw;
+  height: 30vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+@media (max-width: 720px) {
+  .loginContainer {
+    background-image: url(../../styles/backGroundImg/spencer-davis-vJsj-hgOEG0-unsplash.jpg);
+  }
+  .blackBox {
+    width: 75vw;
+    height: 55vh;
+  }  
+  .inputContainer {
+    width: 80%;
+    height: 75%;
+  }
+}
