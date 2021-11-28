@@ -1,17 +1,12 @@
 .loginContainer {
   width: 100vw;
   height: 100vh;
-  background-image: url(../../styles/backGroundImg/mitchell-luo-ChXHveqrb28-unsplash.jpg);
-  background-color: transparent;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .blackBox {
-  background-color: rgba(103, 150, 220, 0.719);
   width: 25vw;
   height: 35vh;
   display: flex;
@@ -34,7 +29,7 @@
   .blackBox {
     width: 75vw;
     height: 55vh;
-  }  
+  }
   .inputContainer {
     width: 80%;
     height: 75%;

@@ -30,7 +30,7 @@ const Index = ({
     <div>
       <Drawer
         title="Edita este Resto!"
-        width={720}
+        width={620}
         onClose={() => showEditDrawer(false)}
         visible={openEditDrawer}
         destroyOnClose={true}

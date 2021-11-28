@@ -37,9 +37,10 @@ const Login = () => {
     const userAndPassword = `${email}::${password}`;
     try {
       if (isEmail(email)) {
-        const resp = await loginFunction(userAndPassword);
-        setToken(resp.token);
-        localStorage.setItem("Token", JSON.stringify(resp.token));
+        const { token, user } = await loginFunction(userAndPassword);
+        localStorage.setItem("Token", JSON.stringify(token));
+        localStorage.setItem("User", JSON.stringify(user.avatar_initials));
+        setToken(token);
         setLoading(false);
       } else {
         console.log("no soy un email");

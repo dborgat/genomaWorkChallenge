@@ -1,0 +1,36 @@
+@import url("https://fonts.googleapis.com/css2?family=Prompt&display=swap");
+
+.navbarContainer {
+  width: 100vw;
+  height: 8vh;
+  position: absolute;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.title {
+  font-family: "Prompt", sans-serif;
+  font-size: 3.125rem;
+  margin: 0;
+  color: rgb(255, 255, 255);
+  span {
+    color: rgb(35, 153, 200);
+  }
+}
+.userTextContainer {
+  display: flex;
+  align-items: center;
+}
+.userText {
+  font-family: "Prompt", sans-serif;
+  font-size: 2.25rem;
+  margin: 0;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  color: rgb(255, 255, 255);
+  span {
+    color: rgb(35, 153, 200);
+  }
+}
+@media (max-width: 720px) {
+}

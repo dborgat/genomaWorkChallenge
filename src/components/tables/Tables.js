@@ -1,7 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
 //EXTERNAL COMPONENTS
 import "antd/dist/antd.css";
-import { Table, Popconfirm, Form, Typography, Button } from "antd";
+import {
+  Table,
+  Popconfirm,
+  Form,
+  Typography,
+  Button,
+  notification,
+} from "antd";
 import { DeleteOutlined, HeartOutlined } from "@ant-design/icons";
 
 // INTERNAL COMPONENTS
@@ -17,7 +24,6 @@ import EditDrawer from "../editDrawer/Index";
 import AddDrawer from "../addDrawer/Index";
 import { filterArray } from "../../helpers/filterRestaurants";
 import { EditableCell } from "../../helpers/editableCell";
-
 const Tables = () => {
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState("");
@@ -136,6 +142,19 @@ const Tables = () => {
     };
   });
   /////------->>
+  const openSuccesNotification = () => {
+    notification["success"]({
+      message: "Resto Agregado!",
+      description: "Pordrá verlo al final de la lista!",
+    });
+  };
+  const openWarningNotification = () => {
+    notification["warning"]({
+      message: "Resto Eliminado!",
+      description: "Pordrá agregar uno nuevo cuando quiera!",
+    });
+  };
+
   const addOneRestaurant = async (newRestaurant) => {
     try {
       await addRestaurant(newRestaurant, token);
@@ -147,6 +166,7 @@ const Tables = () => {
         visited: "",
       });
       showAddDrawer(false);
+      openSuccesNotification();
       setFlag((flag) => !flag);
     } catch (e) {
       console.log("estoy en el front", e);
@@ -155,6 +175,7 @@ const Tables = () => {
   const deleteOneRestaurant = async (id) => {
     try {
       await deleteRestaurant(id, token);
+      openWarningNotification();
       setFlag((flag) => !flag);
     } catch (e) {
       console.log("estoy en el front", e);
@@ -216,6 +237,7 @@ const Tables = () => {
 
         <Form form={form} component={false}>
           <Table
+            loading={!restaurants.length ? true : false}
             components={{
               body: {
                 cell: EditableCell,
