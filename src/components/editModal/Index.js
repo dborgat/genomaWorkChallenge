@@ -1,7 +1,7 @@
 import React from "react";
 //EXTERNAL COMPONENTS
 import "antd/dist/antd.css";
-import { Form, Button, Drawer, Col, Row, Input, Select, Space } from "antd";
+import { Form, Button, Col, Row, Input, Select, Modal } from "antd";
 
 import {
   HeartOutlined,
@@ -18,6 +18,7 @@ const Index = ({
   token,
   editRestaurant,
   setEditRestaurant,
+  loadingButton,
 }) => {
   const { Option } = Select;
 
@@ -28,28 +29,27 @@ const Index = ({
 
   return (
     <div>
-      <Drawer
-        title="Edita este Resto!"
-        width={620}
-        onClose={() => showEditDrawer(false)}
+      <Modal
+        centered={true}
         visible={openEditDrawer}
         destroyOnClose={true}
-        bodyStyle={{ paddingBottom: 80, backgroundColor: "#6266dcb7" }}
-        extra={
-          <Space>
-            <Button onClick={() => showEditDrawer(false)}>
-              Cancel <CloseCircleFilled />
-            </Button>
-            <Button
-              onClick={() =>
-                editOneRestaurant(editRestaurant.id, token, editRestaurant)
-              }
-              type="primary"
-            >
-              Editar Resto <HeartOutlined />
-            </Button>
-          </Space>
-        }
+        title="Edita este Resto!"
+        onCancel={() => showEditDrawer(false)}
+        footer={[
+          <Button key="back" onClick={() => showEditDrawer(false)}>
+            Cancelar <CloseCircleFilled />
+          </Button>,
+          <Button
+            key="submit"
+            type="primary"
+            loading={loadingButton}
+            onClick={() =>
+              editOneRestaurant(editRestaurant.id, token, editRestaurant)
+            }
+          >
+            Editar Resto <HeartOutlined />
+          </Button>,
+        ]}
       >
         <Form layout="vertical" hideRequiredMark>
           <Row gutter={16}>
@@ -199,7 +199,7 @@ const Index = ({
             </Col>
           </Row>
         </Form>
-      </Drawer>
+      </Modal>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import React from "react";
 //EXTERNAL COMPONENTS
 import "antd/dist/antd.css";
-import { Form, Button, Drawer, Col, Row, Input, Select, Space } from "antd";
+import { Form, Button, Col, Row, Input, Select, Modal } from "antd";
 
 import {
   HeartOutlined,
@@ -17,6 +17,7 @@ const Index = ({
   openDrawer,
   newRestaurant,
   addOneRestaurant,
+  loadingButton,
 }) => {
   const { Option } = Select;
 
@@ -26,34 +27,32 @@ const Index = ({
   };
 
   return (
-    <Drawer
-      placement={"bottom"}
-      title="Agrega un nuevo resto!"
-      width={720}
-      onClose={() => showAddDrawer(false)}
-      visible={openDrawer}
+    <Modal
       destroyOnClose={true}
-      bodyStyle={{ paddingBottom: 80, backgroundColor: "#6796dcb7" }}
-      extra={
-        <Space>
-          <Button onClick={() => showAddDrawer(false)}>
-            Cancel <CloseCircleFilled />
-          </Button>
-          <Button
-            onClick={() => addOneRestaurant(newRestaurant)}
-            type="primary"
-            disabled={
-              !newRestaurant.name ||
-              !newRestaurant.visited.toString() ||
-              !newRestaurant.rating ||
-              !newRestaurant.location ||
-              !newRestaurant.food
-            }
-          >
-            Agregar Nuevo Resto <HeartOutlined />
-          </Button>
-        </Space>
-      }
+      centered={true}
+      visible={openDrawer}
+      title="Agrega un nuevo resto!"
+      onCancel={() => showAddDrawer(false)}
+      footer={[
+        <Button key="back" onClick={() => showAddDrawer(false)}>
+          Cancelar <CloseCircleFilled />
+        </Button>,
+        <Button
+          key="submit"
+          type="primary"
+          loading={loadingButton}
+          onClick={() => addOneRestaurant(newRestaurant)}
+          disabled={
+            !newRestaurant.name ||
+            !newRestaurant.visited.toString() ||
+            !newRestaurant.rating ||
+            !newRestaurant.location ||
+            !newRestaurant.food
+          }
+        >
+          Agregar Nuevo Resto <HeartOutlined />
+        </Button>,
+      ]}
     >
       <Form layout="vertical" hideRequiredMark>
         <Row gutter={16}>
@@ -199,7 +198,7 @@ const Index = ({
           </Col>
         </Row>
       </Form>
-    </Drawer>
+    </Modal>
   );
 };
 

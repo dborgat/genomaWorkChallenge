@@ -20,13 +20,15 @@ import {
   deleteRestaurant,
   editRestaurants,
 } from "../../services/restoRequest";
-import EditDrawer from "../editDrawer/Index";
-import AddDrawer from "../addDrawer/Index";
+import EditModal from "../editModal/Index";
+import AddModal from "../addModal/Index";
 import { filterArray } from "../../helpers/filterRestaurants";
 import { EditableCell } from "../../helpers/editableCell";
+
 const Tables = () => {
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState("");
+  const [loadingButton, setLoadingButton] = useState(false);
   const [restaurants, setRestaurants] = useState([]);
   const [flag, setFlag] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -154,8 +156,34 @@ const Tables = () => {
       description: "Pordrá agregar uno nuevo cuando quiera!",
     });
   };
+  const openErrorNotification = () => {
+    notification["error"]({
+      message: "Ya existe un restaurant con ese nombre",
+      description: "Por favor ingrese otro nombre!",
+    });
+  };
+  const openErrorDeleteNotification = () => {
+    notification["error"]({
+      message: "No se pudo borrar el resto",
+      description: "Por favor intente nuevamente!",
+    });
+  };
+  const openErrorEditNotification = () => {
+    notification["error"]({
+      message: "No se pudo editar el resto",
+      description: "Por favor intente nuevamente!",
+    });
+  };
+  const openSuccesEditNotification = () => {
+    notification["success"]({
+      message: "Resto Modificado!",
+      description: "Muchas gracias!",
+    });
+  };
+
 
   const addOneRestaurant = async (newRestaurant) => {
+    setLoadingButton(true);
     try {
       await addRestaurant(newRestaurant, token);
       setNewRestaurant({
@@ -167,9 +195,11 @@ const Tables = () => {
       });
       showAddDrawer(false);
       openSuccesNotification();
+      setLoadingButton(false);
       setFlag((flag) => !flag);
     } catch (e) {
-      console.log("estoy en el front", e);
+      setLoadingButton(false);
+      openErrorNotification();
     }
   };
   const deleteOneRestaurant = async (id) => {
@@ -178,16 +208,22 @@ const Tables = () => {
       openWarningNotification();
       setFlag((flag) => !flag);
     } catch (e) {
-      console.log("estoy en el front", e);
+      openErrorDeleteNotification();
     }
   };
   const editOneRestaurant = async (id, token, editRestaurant) => {
+    setLoadingButton(true);
     try {
+      showEditDrawer(false);
       await editRestaurants(id, token, editRestaurant);
+      setLoadingButton(false);
+      openSuccesEditNotification()
+      setEditRestaurant({});
       setFlag((flag) => !flag);
     } catch (e) {
-      setFlag((flag) => !flag);
-      console.log("estoy en el front", e);
+      setLoadingButton(false);
+      showEditDrawer(false);
+      openErrorEditNotification();
     }
   };
 
@@ -198,7 +234,6 @@ const Tables = () => {
     setOpenEditDrawer(boolean);
   };
   const handleFilterChange = (pagination, filters, sorter) => {
-    console.log("Various parameters", pagination, filters, sorter);
     setFilter({
       filteredInfo: filters,
     });
@@ -258,14 +293,16 @@ const Tables = () => {
         >
           Agrega un nuevo resto
         </Button>
-        <AddDrawer
+        <AddModal
           setNewRestaurant={setNewRestaurant}
           showAddDrawer={showAddDrawer}
           openDrawer={openDrawer}
           newRestaurant={newRestaurant}
           addOneRestaurant={addOneRestaurant}
+          loadingButton={loadingButton}
         />
-        <EditDrawer
+        <EditModal
+          loadingButton={loadingButton}
           openEditDrawer={openEditDrawer}
           showEditDrawer={showEditDrawer}
           editOneRestaurant={editOneRestaurant}

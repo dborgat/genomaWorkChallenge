@@ -1,12 +1,8 @@
-import axios from "axios";
+import axios from "./axiosConfig";
 
 export const getRestaurants = async (userToken) => {
   try {
-    const headers = { Authorization: `Token ${userToken}` };
-    const { data } = await axios.get(
-      "https://genoma-challenge-app.herokuapp.com/restaurants/",
-      { headers }
-    );
+    const { data } = await axios.get("/restaurants/");
     console.log(
       "🚀 ~ file: restoRequest.js ~ line 10 ~ getRestaurants ~ resp",
       data
@@ -20,12 +16,13 @@ export const getRestaurants = async (userToken) => {
 export const addRestaurant = async (body, userToken) => {
   const { name, food, location, rating, visited } = body;
   try {
-    const headers = { Authorization: `Token ${userToken}` };
-    await axios.post(
-      "https://genoma-challenge-app.herokuapp.com/restaurants/",
-      { name, food, location, rating, visited },
-      { headers }
-    );
+    await axios.post("/restaurants/", {
+      name,
+      food,
+      location,
+      rating,
+      visited,
+    });
   } catch (e) {
     throw new Error(e);
   }
@@ -33,11 +30,7 @@ export const addRestaurant = async (body, userToken) => {
 
 export const deleteRestaurant = async (restoPk, userToken) => {
   try {
-    const headers = { Authorization: `Token ${userToken}` };
-    const { data } = await axios.delete(
-      `https://genoma-challenge-app.herokuapp.com/restaurants/${restoPk}/`,
-      { headers }
-    );
+    const { data } = await axios.delete(`/restaurants/${restoPk}/`);
     return data;
   } catch (e) {
     throw new Error(e);
@@ -47,16 +40,17 @@ export const deleteRestaurant = async (restoPk, userToken) => {
 export const editRestaurants = async (restoPk, userToken, body) => {
   const { name, food, location, rating, visited } = body;
   try {
-    const headers = { Authorization: `Token ${userToken}` };
-    const resp = await axios.patch(
+    const resp = await axios.put(
       `https://genoma-challenge-app.herokuapp.com/restaurants/${restoPk}/`,
-      { name, food, location, rating, visited },
-      { headers }
+      {
+        name,
+        food,
+        location,
+        rating,
+        visited,
+      }
     );
-    console.log(
-      "🚀 ~ file: restoRequest.js ~ line 56 ~ editRestaurants ~ resp",
-      resp
-    );
+    return resp;
   } catch (e) {
     throw new Error(e);
   }

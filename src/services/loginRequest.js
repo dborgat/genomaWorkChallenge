@@ -21,7 +21,7 @@ export const logoutFunction = async (token) => {
       {},
       { headers }
     );
-    return false;
+    return null;
   } catch {
     throw new Error(true);
   }

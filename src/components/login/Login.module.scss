@@ -1,37 +1,51 @@
-.loginContainer {
+.mainContainer {
   width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+.loginContainer {
+  width: 60vw;
   height: 100vh;
   background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.blackBox {
-  width: 25vw;
-  height: 35vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.inputContainer {
+.input {
   width: 20vw;
   height: 30vh;
+}
+.inputDescriptionText {
+  color: white;
+  margin: 0;
+}
+.inputContainer {
+  height: 40vh;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
 }
+.photoContainer {
+  width: 40vw;
+  height: 100vh;
+  background-image: url(../../styles/backGroundImg/q-u-i-cnTdKzMOBns-unsplash.jpg);
+  background-size: cover;
+}
 
 @media (max-width: 720px) {
-  .loginContainer {
-    background-image: url(../../styles/backGroundImg/spencer-davis-vJsj-hgOEG0-unsplash.jpg);
-  }
-  .blackBox {
-    width: 75vw;
-    height: 55vh;
-  }
   .inputContainer {
     width: 80%;
-    height: 75%;
+    height: 40%;
+  }
+  .input {
+    width: 100%;
+  }
+  
+  .photoContainer {
+    display: none;
+  }
+  .loginContainer {
+    width: 100vw;
   }
 }

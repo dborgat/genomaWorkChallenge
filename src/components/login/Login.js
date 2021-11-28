@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 
 //EXTERNAL COMPONENTS
 import "antd/dist/antd.css";
-import { Input, Button, Alert } from "antd";
+import { Input, Button, Alert, Typography } from "antd";
 import {
   UserOutlined,
   EyeInvisibleOutlined,
@@ -17,6 +17,7 @@ import { loginFunction } from "../../services/loginRequest";
 import Auth from "../../context/auth";
 
 const Login = () => {
+  const { Title } = Typography;
   const [userLogin, setUserLogin] = useState({ email: "", password: "" });
   const [error, setError] = useState({
     email: false,
@@ -43,7 +44,6 @@ const Login = () => {
         setToken(token);
         setLoading(false);
       } else {
-        console.log("no soy un email");
         setLoading(false);
       }
     } catch (e) {
@@ -68,6 +68,10 @@ const Login = () => {
     }));
   };
 
+  const onFocusCleanError = (name) => {
+    setError((error) => ({ ...error, [name]: false }));
+  };
+
   const onCloseEmailValidError = () => {
     setError((error) => ({
       ...error,
@@ -81,74 +85,85 @@ const Login = () => {
   }, []);
 
   return (
-    <div className={S.loginContainer}>
-      <div className={S.blackBox}>
+    <div className={S.mainContainer}>
+      <div className={S.loginContainer}>
         <div className={S.inputContainer}>
-          <Input
-            allowClear
-            size="large"
-            name="email"
-            placeholder="Por favor ingrese su correo"
-            onChange={handleChangeUser}
-            value={userLogin.email}
-            prefix={<UserOutlined className="site-form-item-icon" />}
-            onBlur={checkEmailOnBlur}
-          />
-          {error.email && (
-            <Alert
+          <div className={S.input}>
+            <h1 className={S.inputDescriptionText}>Email:</h1>
+            <Input
+              allowClear
               size="large"
-              message="Por Favor ingrese un E-mail."
-              type="error"
-              showIcon
+              name="email"
+              placeholder="Por favor ingrese su correo"
+              onChange={handleChangeUser}
+              value={userLogin.email}
+              prefix={<UserOutlined className="site-form-item-icon" />}
+              onBlur={checkEmailOnBlur}
+              onFocus={() => onFocusCleanError("email")}
             />
-          )}
-          <Input.Password
-            size="large"
-            name="password"
-            value={userLogin.password}
-            placeholder="Por favor ingrese su password"
-            iconRender={(visible) =>
-              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-            }
-            onChange={handleChangeUser}
-            onBlur={checkPasswordOnBlur}
-          />
-          {error.password && (
-            <Alert
+            {error.email && (
+              <Alert
+                size="large"
+                message="Por Favor ingrese un E-mail."
+                type="error"
+                showIcon
+              />
+            )}
+          </div>
+          <div className={S.input}>
+            <h1 className={S.inputDescriptionText}>Password:</h1>
+            <Input.Password
               size="large"
-              message="Por favor ingrese más de 6 caracteres."
-              type="error"
-              showIcon
+              name="password"
+              value={userLogin.password}
+              placeholder="Por favor ingrese su password"
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
+              onChange={handleChangeUser}
+              onBlur={checkPasswordOnBlur}
+              onFocus={() => onFocusCleanError("password")}
             />
-          )}
-          <Button
-            type="primary"
-            icon={<LoginOutlined />}
-            loading={loading}
-            block
-            size="large"
-            onClick={handleSubmit}
-            disabled={
-              error.email ||
-              error.password ||
-              !userLogin.email ||
-              !userLogin.password
-            }
-          >
-            Log in
-          </Button>
-          {error.emailValid && (
-            <Alert
+            {error.password && (
+              <Alert
+                size="large"
+                message="Por favor ingrese más de 6 caracteres."
+                type="error"
+                showIcon
+              />
+            )}
+          </div>
+          <div className={S.input}>
+            <Button
+              type="primary"
+              icon={<LoginOutlined />}
+              loading={loading}
+              block
               size="large"
-              message="No se encontró el email, por favor ingrese uno valido."
-              closable
-              onClose={onCloseEmailValidError}
-              type="error"
-              showIcon
-            />
-          )}
+              onClick={handleSubmit}
+              disabled={
+                error.email ||
+                error.password ||
+                !userLogin.email ||
+                !userLogin.password
+              }
+            >
+              Log in
+            </Button>
+            {error.emailValid && (
+              <Alert
+                size="large"
+                message="Ocurrió un error, por favor revise que las credenciales sean validas."
+                closable
+                onClose={onCloseEmailValidError}
+                type="error"
+                showIcon
+              />
+            )}
+          </div>
         </div>
       </div>
+      <div className={S.photoContainer}></div>
     </div>
   );
 };
