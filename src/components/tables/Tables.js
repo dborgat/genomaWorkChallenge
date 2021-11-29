@@ -147,7 +147,7 @@ const Tables = () => {
   const openSuccesNotification = () => {
     notification["success"]({
       message: "Resto Agregado!",
-      description: "Pordrá verlo al final de la lista!",
+      description: "Pordrá verlo en la tabla!",
     });
   };
   const openWarningNotification = () => {
@@ -185,7 +185,7 @@ const Tables = () => {
   const addOneRestaurant = async (newRestaurant) => {
     setLoadingButton(true);
     try {
-      await addRestaurant(newRestaurant, token);
+      await addRestaurant(newRestaurant);
       setNewRestaurant({
         name: "",
         location: "",
@@ -204,18 +204,18 @@ const Tables = () => {
   };
   const deleteOneRestaurant = async (id) => {
     try {
-      await deleteRestaurant(id, token);
+      await deleteRestaurant(id);
       openWarningNotification();
       setFlag((flag) => !flag);
     } catch (e) {
       openErrorDeleteNotification();
     }
   };
-  const editOneRestaurant = async (id, token, editRestaurant) => {
+  const editOneRestaurant = async (id, editRestaurant) => {
     setLoadingButton(true);
     try {
       showEditDrawer(false);
-      await editRestaurants(id, token, editRestaurant);
+      await editRestaurants(id, editRestaurant);
       setLoadingButton(false);
       openSuccesEditNotification()
       setEditRestaurant({});
@@ -246,7 +246,7 @@ const Tables = () => {
   useEffect(() => {
     const getAllResto = async () => {
       try {
-        const resp = await getRestaurants(token);
+        const resp = await getRestaurants();
         setRestaurants(resp);
       } catch (e) {
         console.log(e);
@@ -306,7 +306,6 @@ const Tables = () => {
           openEditDrawer={openEditDrawer}
           showEditDrawer={showEditDrawer}
           editOneRestaurant={editOneRestaurant}
-          token={token}
           editRestaurant={editRestaurant}
           setEditRestaurant={setEditRestaurant}
         />

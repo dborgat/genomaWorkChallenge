@@ -1,8 +1,8 @@
-import axios from "./axiosConfig";
+import axiosConfig from "./axiosConfig";
 
-export const getRestaurants = async (userToken) => {
+export const getRestaurants = async () => {
   try {
-    const { data } = await axios.get("/restaurants/");
+    const { data } = await axiosConfig.get("/restaurants/");
     console.log(
       "🚀 ~ file: restoRequest.js ~ line 10 ~ getRestaurants ~ resp",
       data
@@ -13,10 +13,10 @@ export const getRestaurants = async (userToken) => {
   }
 };
 
-export const addRestaurant = async (body, userToken) => {
+export const addRestaurant = async (body) => {
   const { name, food, location, rating, visited } = body;
   try {
-    await axios.post("/restaurants/", {
+    await axiosConfig.post("/restaurants/", {
       name,
       food,
       location,
@@ -28,19 +28,19 @@ export const addRestaurant = async (body, userToken) => {
   }
 };
 
-export const deleteRestaurant = async (restoPk, userToken) => {
+export const deleteRestaurant = async (restoPk) => {
   try {
-    const { data } = await axios.delete(`/restaurants/${restoPk}/`);
+    const { data } = await axiosConfig.delete(`/restaurants/${restoPk}/`);
     return data;
   } catch (e) {
     throw new Error(e);
   }
 };
 
-export const editRestaurants = async (restoPk, userToken, body) => {
+export const editRestaurants = async (restoPk, body) => {
   const { name, food, location, rating, visited } = body;
   try {
-    const resp = await axios.put(
+    const resp = await axiosConfig.put(
       `https://genoma-challenge-app.herokuapp.com/restaurants/${restoPk}/`,
       {
         name,

@@ -15,7 +15,6 @@ const Index = ({
   openEditDrawer,
   showEditDrawer,
   editOneRestaurant,
-  token,
   editRestaurant,
   setEditRestaurant,
   loadingButton,
@@ -44,7 +43,7 @@ const Index = ({
             type="primary"
             loading={loadingButton}
             onClick={() =>
-              editOneRestaurant(editRestaurant.id, token, editRestaurant)
+              editOneRestaurant(editRestaurant.id, editRestaurant)
             }
           >
             Editar Resto <HeartOutlined />
