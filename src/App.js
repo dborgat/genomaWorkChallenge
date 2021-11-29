@@ -19,16 +19,8 @@ function App() {
   return (
     <>
       <Auth.Provider value={{ setToken, token, user, setUser }}>
-        {!token ? (
-          <>
-            <Navbar />
-            <Login />
-          </>
-        ) : (
-          <>
-            <Navbar /> <Tables />
-          </>
-        )}
+        <Navbar />
+        {!token ? <Login /> : <Tables />}
       </Auth.Provider>
     </>
   );
